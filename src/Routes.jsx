@@ -5,15 +5,15 @@ import Dashboard from './components/Dashboard';
 const routes = [
   {
     path: '/',
-    element: <Login />,
+    element: <Dashboard />,
   },
   {
     path: "register",
     element: <Register />
   },
   {
-    path: "Dashboard",
-    element: <Dashboard />
+    path: "login",
+    element: <Login />
   }
 ];
 

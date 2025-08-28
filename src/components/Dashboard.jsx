@@ -2,6 +2,7 @@ import Navbar from "./navbar/Navbar";
 import styles from "../styles/Dashboard.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
    const [posts, setPosts] = useState([])
@@ -67,8 +68,42 @@ const Dashboard = () => {
           ))
         )}
       </div>
+      <div className={styles.footerDiv}>
+  <div className={styles.footerContent}>
+    <div className={styles.footerAbout}>
+      <h4>About Chronicles</h4>
+      <p>
+        Chronicles is a modern blogging platform where authors share insights,
+        stories, and tutorials. Stay connected with us on social media!
+      </p>
+    </div>
 
-      <div className={styles.footerDiv}></div>
+    <div className={styles.footerLinks}>
+      <h4>Quick Links</h4>
+      <ul>
+                     <Link className={styles.link}><li key={"home"}>Home</li></Link>
+                    <Link className={styles.link}><li key={"posts"}>Posts</li></Link>
+                    <Link to={"register"} className={styles.link}><li key={"register"}>Register</li></Link>
+                    <Link to={"login"} className={styles.link}><li key={"login"}>Login</li></Link>
+      </ul>
+    </div>
+
+    <div className={styles.footerSocial}>
+      <h4>Follow Us</h4>
+      <div className={styles.socialIcons}>
+        <a href="https://facebook.com" target="_blank" rel="noreferrer">Facebook</a>
+        <a href="https://twitter.com" target="_blank" rel="noreferrer">Twitter</a>
+        <a href="https://instagram.com" target="_blank" rel="noreferrer">Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <div className={styles.footerBottom}>
+    <p>© {new Date().getFullYear()} Chronicles. All rights reserved. BY ATAGWE ROGER</p>
+  </div>
+</div>
+
+      
     </div>
   );
 };

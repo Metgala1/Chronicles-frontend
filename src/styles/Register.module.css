@@ -1,14 +1,8 @@
-/* src/pages/Register.module.css */
 
-/* ===== Container ===== */
 .container {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(
-    135deg,
-    #6a11cb,
-    #2575fc
-  ); /* soft purple-blue gradient */
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -19,13 +13,12 @@
   overflow: hidden;
 }
 
-/* Floating soft circles for visual depth */
 .container::before,
 .container::after {
   content: '';
   position: absolute;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   animation: float 15s infinite linear;
 }
 
@@ -45,39 +38,32 @@
 }
 
 @keyframes float {
-  0% {
-    transform: translateY(0) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-50px) rotate(180deg);
-  }
-  100% {
-    transform: translateY(0) rotate(360deg);
-  }
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-50px) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
 }
 
-/* ===== Form Card ===== */
 .formDiv {
   width: 100%;
   max-width: 480px;
-  background-color: rgba(255, 255, 255, 0.95); /* slightly transparent */
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background-color: rgba(20, 20, 20, 0.95); 
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
   padding: 2rem;
   border-radius: 20px;
-  color: #111;
+  color: #fff;
   z-index: 1;
   position: relative;
 }
 
-/* ===== Title ===== */
 .title {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1.8rem;
-  color: #222;
+  color: #ff8c00; 
+  text-align: center;
 }
 
-/* ===== Fieldset & Legend ===== */
+
 fieldset {
   border: none;
   margin-bottom: 1rem;
@@ -85,13 +71,12 @@ fieldset {
 }
 
 legend {
-  text-align: left; /* legend aligned left */
+  text-align: left;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: #444;
+  color: #ccc;
 }
 
-/* ===== Form ===== */
 .form {
   display: flex;
   flex-direction: column;
@@ -99,80 +84,79 @@ legend {
   width: 100%;
 }
 
-/* ===== Inputs ===== */
+
 .input {
   width: 100%;
   padding: 0.85rem 1rem;
-  border: 1px solid #ddd;
+  border: 1px solid #444;
   border-radius: 10px;
   font-size: 1rem;
-  transition:
-    border-color 0.3s,
-    box-shadow 0.3s;
+  background-color: #111;
+  color: #fff;
+  transition: border-color 0.3s, box-shadow 0.3s;
   box-sizing: border-box;
 }
 
+.input::placeholder {
+  color: #aaa;
+}
+
 .input:focus {
-  border-color: #6a11cb;
-  box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+  border-color: #ff8c00;
+  box-shadow: 0 0 8px rgba(255, 140, 0, 0.5);
   outline: none;
 }
 
-/* ===== Button ===== */
 .button {
   padding: 0.9rem 1rem;
-  background: #6a11cb;
+  background: #ff8c00;
   color: #fff;
   font-weight: 600;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition:
-    background 0.3s,
-    transform 0.2s;
+  transition: background 0.3s, transform 0.2s;
   width: 60%;
   margin: auto;
 }
 
 .button:hover {
-  background: #5b0fc2;
+  background: #e57c00;
   transform: translateY(-2px);
 }
 
-/* ===== Messages ===== */
+
 .error {
   margin-top: 1rem;
   color: #e63946;
   font-size: 0.9rem;
+  text-align: center;
 }
 
 .success {
   margin-top: 1rem;
   color: #2a9d8f;
   font-size: 0.9rem;
+  text-align: center;
 }
 
-/* ===== Responsive Design ===== */
 @media (max-width: 700px) {
   .formDiv {
     padding: 1.5rem;
-    border-radius: 15px;
     width: 100%;
-    height: 100vh;
-    border-radius: 0px;
+    height: auto;
+    border-radius: 15px;
   }
   .container {
-    padding: 0;
+    padding: 1rem;
   }
   .title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
-
   .input {
     padding: 0.7rem 0.9rem;
     font-size: 0.95rem;
   }
-
   .button {
     padding: 0.8rem;
     font-size: 0.95rem;
