@@ -4,8 +4,13 @@
 .container {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #6a11cb, #2575fc); /* soft purple-blue gradient */
+  background: linear-gradient(
+    135deg,
+    #6a11cb,
+    #2575fc
+  ); /* soft purple-blue gradient */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
@@ -17,7 +22,7 @@
 /* Floating soft circles for visual depth */
 .container::before,
 .container::after {
-  content: "";
+  content: '';
   position: absolute;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
@@ -40,9 +45,15 @@
 }
 
 @keyframes float {
-  0% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-50px) rotate(180deg); }
-  100% { transform: translateY(0) rotate(360deg); }
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-50px) rotate(180deg);
+  }
+  100% {
+    transform: translateY(0) rotate(360deg);
+  }
 }
 
 /* ===== Form Card ===== */
@@ -95,7 +106,9 @@ legend {
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
   box-sizing: border-box;
 }
 
@@ -114,7 +127,9 @@ legend {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
+  transition:
+    background 0.3s,
+    transform 0.2s;
   width: 60%;
   margin: auto;
 }
@@ -146,7 +161,7 @@ legend {
     height: 100vh;
     border-radius: 0px;
   }
-  .container{
+  .container {
     padding: 0;
   }
   .title {
@@ -163,5 +178,3 @@ legend {
     font-size: 0.95rem;
   }
 }
-
-

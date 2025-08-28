@@ -1,0 +1,52 @@
+.navbar{
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 5rem;
+    margin: auto;
+    color: black;
+    background: rgba(0,0,0,0.2);
+    border-radius: 2.5rem;
+    height: 60px;
+    margin-top: 1rem;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.4);
+
+}
+.navbarLogo{
+    font-size: 2.5rem;
+    margin-right: auto;
+    padding: 0px;
+    font-weight: 700;
+    color: bisque;
+    font-family:'Courier New', Courier, monospace;
+
+}
+
+.navbar nav ul {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    list-style: none; 
+    font-weight: 500;
+    font-size: larger;   
+   
+}
+.link{
+    color: black;
+}
+.link:hover{
+    color: white;
+}
+
+@media (max-width: 700px) {
+    .navbar{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .navbarLogo{
+        margin: auto;
+    }
+}

@@ -1,0 +1,31 @@
+.dashboard{
+    background-color: black;
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.dashboard > div{
+    flex: 1;
+    width: 100%;
+    margin: auto;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.dashboard .headerDiv {
+  flex: 3;
+  background-image: url("../../public/girlwithearphones.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+
+.dashboard .mainDiv{
+    flex: 2;
+}
