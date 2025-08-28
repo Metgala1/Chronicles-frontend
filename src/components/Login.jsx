@@ -26,9 +26,8 @@ const Login = () => {
       });
       setSuccess(data.message);
       setTimeout(() => {
-         navigate('register');
-      }, 1500)
-      
+        navigate('register');
+      }, 1500);
     } catch (err) {
       setError(err?.response?.date?.message || 'Something went wrong');
     }
