@@ -9,7 +9,7 @@
 }
 
 .dashboard .headerDiv {
-  height: 60vh;
+  min-height: 100vh;
   background-image: url('../../public/girlwithearphones.jpg');
   background-position: center;
   background-repeat: no-repeat;
@@ -28,6 +28,7 @@
   gap: 2rem;
   overflow-y: auto;
   box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .dashboard .mainDiv::-webkit-scrollbar {
