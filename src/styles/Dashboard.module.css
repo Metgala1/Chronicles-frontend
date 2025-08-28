@@ -1,31 +1,114 @@
-.dashboard{
-    background-color: black;
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-
-
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f2f4f8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-.dashboard > div{
-    flex: 1;
-    width: 100%;
-    margin: auto;
-    background-color: rgba(0,0,0,0.1);
-}
 
 .dashboard .headerDiv {
-  flex: 3;
+  height: 60vh;
   background-image: url("../../public/girlwithearphones.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
-.dashboard .mainDiv{
-    flex: 2;
+.dashboard .mainDiv {
+  flex: 1;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+
+.dashboard .mainDiv::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dashboard .mainDiv::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.postCard {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.postCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.postTitle {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.postContent {
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+.postAuthor {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #555;
+}
+
+.postMeta {
+  font-size: 0.85rem;
+  color: #777;
+  margin-top: 1rem;
+}
+
+
+.commentSection {
+  margin-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 0.8rem;
+}
+
+.commentTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.commentCard {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.loadingText {
+  grid-column: 1/-1;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.footerDiv {
+  height: 50px;
+  background-color: #1a1a1a;
 }
