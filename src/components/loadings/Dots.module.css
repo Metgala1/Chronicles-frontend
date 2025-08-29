@@ -1,0 +1,47 @@
+:root {
+  --dot-color: #ff8c00;
+  --animation-duration: 1.4s;
+}
+
+.loadingDotsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+  width: 80px;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background-color: var(--dot-color);
+  border-radius: 50%;
+  opacity: 0;
+  animation: dot-fade var(--animation-duration) infinite ease-in-out;
+}
+
+.dot1 {
+  animation-delay: 0s;
+}
+
+.dot2 {
+  animation-delay: calc(var(--animation-duration) / 4);
+}
+
+.dot3 {
+  animation-delay: calc(var(--animation-duration) / 2);
+}
+
+@keyframes dot-fade {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
