@@ -125,6 +125,7 @@ legend {
     transform 0.2s;
   width: 60%;
   margin: auto;
+  display: block;
 }
 
 .button:hover {
@@ -135,14 +136,14 @@ legend {
 .error {
   margin-top: 1rem;
   color: #e63946;
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   text-align: center;
 }
 
 .success {
   margin-top: 1rem;
   color: #2a9d8f;
-  font-size: 0.9rem;
+  font-size: 1.5rem;
   text-align: center;
 }
 

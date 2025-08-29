@@ -3,8 +3,8 @@
   --font-family:
     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
-  --color-primary: #4f46e5;
-  --color-primary-hover: #4338ca;
+  --color-primary: #ff8c00;
+  --color-primary-hover: black;
   --color-bg-dark: #1e1e1e;
   --color-bg-light: #ffffff;
   --color-text-dark: #111827;
@@ -27,16 +27,14 @@
 
 html,
 body {
-  overflow-x: hidden; /* kill horizontal scroll */
+  overflow-x: hidden; 
 }
 
-/* ===== Body ===== */
 body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
   width: 100%;
-  background-color: rgb(175, 172, 172);
 }
 
 #root {

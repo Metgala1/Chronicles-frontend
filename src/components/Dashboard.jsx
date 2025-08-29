@@ -3,18 +3,21 @@ import styles from '../styles/Dashboard.module.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Header from './Header';
+
+ 
 
 const Dashboard = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoadng] = useState(true);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get(`${BACKEND_URL}/posts/`);
-        setPosts(res.data);
-        console.log(res);
+        const {data} = await axios.get(`${BACKEND_URL}/posts/`);
+        setPosts(data);
       } catch (err) {
         console.error('Error fetching posts:', err);
       } finally {
@@ -26,17 +29,19 @@ const Dashboard = () => {
 
   return (
     <div className={styles.dashboard}>
+        <Header />
       <div className={styles.headerDiv}>
         <Navbar />
       </div>
 
-      <div className={styles.mainDiv}>
+      <div id='main' className={styles.mainDiv}>
         {loading ? (
           <p className={styles.loadingText}>Loading posts...</p>
         ) : posts.length === 0 ? (
           <p className={styles.loadingText}>No posts available</p>
         ) : (
           posts.map((post) => (
+             <Link className={styles.link1} to={`/posts/${post.id}`}>
             <div key={post.id} className={styles.postCard}>
               <h2 className={styles.postTitle}>{post.title}</h2>
               <p className={styles.postContent}>{post.content}</p>
@@ -63,6 +68,7 @@ const Dashboard = () => {
                 {post.published ? 'Published' : 'Not Published'}
               </p>
             </div>
+            </Link>
           ))
         )}
       </div>

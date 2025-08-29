@@ -1,27 +1,42 @@
-import styles from './Navbar.module.css';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-const navbar = () => {
+import styles from './Navbar.module.css';
+import { AuthContext } from '../../AuthContext/AuthContext';
+
+const Navbar = () => {
+  const { auth, logout } = useContext(AuthContext);
+  const user = auth.user;
+
   return (
     <div className={styles.navbar}>
-      <p className={styles.navbarLogo}>Chronicles</p>
+      <p className={styles.navbarLogo}>{user ? `Hello, ${user.username}`   : 'Chronicles'}</p>
       <nav>
         <ul>
-          <Link className={styles.link}>
-            <li key={'home'}>Home</li>
-          </Link>
-          <Link className={styles.link}>
-            <li key={'posts'}>Posts</li>
-          </Link>
-          <Link to={'register'} className={styles.link}>
-            <li key={'register'}>Register</li>
-          </Link>
-          <Link to={'login'} className={styles.link}>
-            <li key={'login'}>Login</li>
-          </Link>
+          <li key="home">
+            <Link to="/" className={styles.link}>Home</Link>
+          </li>
+          <li key="posts">
+            <a  href="#main" className={styles.link}>Posts</a>
+          </li>
+          {!user && (
+            <>
+              <li key="register">
+                <Link to="/register" className={styles.link}>Register</Link>
+              </li>
+              <li key="login">
+                <Link to="/login" className={styles.link}>Login</Link>
+              </li>
+            </>
+          )}
+          {user && (
+            <li key="logout">
+              <button className={styles.link} onClick={logout}>Logout</button>
+            </li>
+          )}
         </ul>
       </nav>
     </div>
   );
 };
 
-export default navbar;
+export default Navbar;

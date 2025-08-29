@@ -1,9 +1,8 @@
-// src/pages/Register.jsx
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'; // <-- import axios
 import styles from '../styles/Register.module.css';
 import { FaUserPlus } from 'react-icons/fa';
+import { AuthContext } from '../AuthContext/AuthContext';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -13,8 +12,9 @@ export default function Register() {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
   const navigate = useNavigate();
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+  const { register } = useContext(AuthContext);
 
   const handleChange = (e) => {
     setFormData({
@@ -28,22 +28,13 @@ export default function Register() {
     setError('');
     setSuccess('');
 
-    try {
-      // Axios POST request
-      const { data } = await axios.post(
-        `${BACKEND_URL}/auth/register`,
-        formData, // automatically JSON.stringified
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+    const result = await register(formData);
 
-      //If succesful we set Setsuccess Message to the date message
-      setSuccess(data.message);
+    if (result.success) {
+      setSuccess('Account created successfully! Redirecting to login...');
       setTimeout(() => navigate('/login'), 1500);
-    } catch (err) {
-      // Axios throws for non-2xx responses
-      setError(err.response?.data?.message || 'Something went wrong');
+    } else {
+      setError(result.message || 'Registration failed.');
     }
   };
 
@@ -95,6 +86,7 @@ export default function Register() {
             <FaUserPlus /> Register
           </button>
         </form>
+
         {error && <p className={styles.error}>{error}</p>}
         {success && <p className={styles.success}>{success}</p>}
       </div>
