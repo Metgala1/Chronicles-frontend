@@ -4,6 +4,7 @@ import Dashboard from './components/Dashboard';
 import PostPage from './components/PostPage';
 import LoadingDots from './components/loadings/LoadingDot';
 import Error from './components/ErrorComponent/Error';
+import CreatePost from './components/CreatePost';
 
 const routes = [
   {
@@ -31,6 +32,11 @@ const routes = [
     element: <LoadingDots />,
     errorElement: <Error />,
   },
+  {
+    path: "createpost",
+    element: <CreatePost />
+
+  }
 ];
 
 export default routes;

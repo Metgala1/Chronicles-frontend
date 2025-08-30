@@ -4,13 +4,18 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import routes from "./Routes";
 import { AuthProvider } from "./AuthContext/AuthContext";
+import { PostProvider } from "./postContext/PostContext";
 
 const router = createBrowserRouter(routes);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider> 
+      <PostProvider>
+
       <RouterProvider router={router} />
+      
+      </PostProvider>
     </AuthProvider>
   </StrictMode>
 );

@@ -13,7 +13,7 @@ const Navbar = () => {
       <nav>
         <ul>
           <li key="home">
-            <Link to="/" className={styles.link}>Home</Link>
+            <Link to="createpost" className={styles.link}>Create Post</Link>
           </li>
           <li key="posts">
             <a  href="#main" className={styles.link}>Posts</a>

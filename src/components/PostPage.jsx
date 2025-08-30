@@ -1,34 +1,36 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback, useContext } from "react";
 import axios from "axios";
 import styles from "../styles/PostPage.module.css";
 import LoadingDots from "./loadings/LoadingDot";
-import { FaPaperPlane,  FaTrash } from "react-icons/fa"; 
+import { FaPaperPlane, FaTrash, FaEdit } from "react-icons/fa"; 
 import { AuthContext } from "../AuthContext/AuthContext";
+import { PostContext } from "../postContext/PostContext";
 
 function PostPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const {auth} = useContext(AuthContext)
-  const user = auth.user.id
-  
-  // Separate loading states for initial post fetch and for posting a comment
+  const { auth } = useContext(AuthContext);
+  const user = auth?.user?.id;
+
+  const { deletePost } = useContext(PostContext);
+
   const [isPostLoading, setIsPostLoading] = useState(true);
   const [isCommentPosting, setIsCommentPosting] = useState(false);
-  
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const [error, setError] = useState(null);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-  // Use useCallback to memoize the fetch function, preventing unnecessary re-creations
   const fetchPostAndComments = useCallback(async () => {
     try {
       setIsPostLoading(true);
       const res = await axios.get(`${BACKEND_URL}/posts/${id}`);
       setPost(res.data);
       setComments(res.data.comments || []);
-      console.log(res.data)
     } catch (err) {
       console.error("Failed to fetch post:", err);
       setError("Failed to load post. Please check your connection and try again later.");
@@ -63,6 +65,29 @@ function PostPage() {
     }
   };
 
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
+
+    try {
+      setIsDeleting(true);
+      const result = await deletePost(post.id);
+      if (result.success) {
+        navigate("/");
+      } else {
+        alert(result.message || "Failed to delete post.");
+      }
+    } catch (err) {
+      console.error("Error deleting post:", err);
+      alert("Unexpected error while deleting.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleUpdate = () => {
+    navigate("/createpost", { state: { post } });
+  };
+
   if (isPostLoading) return <LoadingDots />;
   if (error) return <p className={`${styles.status} ${styles.error}`}>{error}</p>;
   if (!post) return <p className={styles.status}>No post found with this ID. It may have been deleted.</p>;
@@ -75,6 +100,24 @@ function PostPage() {
         <p className={styles.author}>
           <b>Author:</b> {post?.author?.username || "Unknown"}
         </p>
+
+        {user === post?.author?.id && (
+          <div className={styles.postActions}>
+            <button 
+              onClick={handleUpdate} 
+              className={styles.updateBtn}
+            >
+              <FaEdit /> Update Post
+            </button>
+            <button 
+              onClick={handleDelete} 
+              className={styles.deleteBtn} 
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Deleting..." : <><FaTrash /> Delete Post</>}
+            </button>
+          </div>
+        )}
       </article>
 
       <section className={styles.commentsSection}>
@@ -98,19 +141,15 @@ function PostPage() {
             placeholder="Write a comment..."
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            disabled={isCommentPosting} // Disable while posting to prevent multiple submissions
+            disabled={isCommentPosting}
           />
-          <div className={styles.deletePostBtn}>
-            {user === post?.author?.id && <button className={styles.deleteBtn} type="submit"><FaTrash /> Delete</button>}
-            <button 
+          <button 
             type="submit" 
             className={styles.button} 
             disabled={isCommentPosting}
           >
-           <FaPaperPlane /> {isCommentPosting ? <LoadingDots /> : "Post Comment"}
+            <FaPaperPlane /> {isCommentPosting ? <LoadingDots /> : "Post Comment"}
           </button>
-
-          </div>
         </form>
       </section>
     </div>

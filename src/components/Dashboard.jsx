@@ -1,77 +1,62 @@
 import Navbar from './navbar/Navbar';
 import styles from '../styles/Dashboard.module.css';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Header from './Header';
-
- 
+import LoadingDots from './loadings/LoadingDot';
+import { PostContext } from '../postContext/PostContext';
 
 const Dashboard = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoadng] = useState(true);
-  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const {data} = await axios.get(`${BACKEND_URL}/posts/`);
-        setPosts(data);
-      } catch (err) {
-        console.error('Error fetching posts:', err);
-      } finally {
-        setLoadng(false);
-      }
-    };
-    fetchPosts();
-  }, []);
+  const { posts, loading, error } = useContext(PostContext);
 
   return (
     <div className={styles.dashboard}>
-        <Header />
+      <Header />
       <div className={styles.headerDiv}>
         <Navbar />
       </div>
 
-      <div id='main' className={styles.mainDiv}>
+      <div id="main" className={styles.mainDiv}>
         {loading ? (
-          <p className={styles.loadingText}>Loading posts...</p>
+          <LoadingDots />
+        ) : error ? (
+          <p className={styles.loadingText}>{error}</p>
         ) : posts.length === 0 ? (
           <p className={styles.loadingText}>No posts available</p>
         ) : (
           posts.map((post) => (
-             <Link className={styles.link1} to={`/posts/${post.id}`}>
-            <div key={post.id} className={styles.postCard}>
-              <h2 className={styles.postTitle}>{post.title}</h2>
-              <p className={styles.postContent}>{post.content}</p>
-              <p className={styles.postAuthor}>
-                <strong>By:</strong> {post.author?.username}
-              </p>
+            <Link key={post.id} className={styles.link1} to={`/posts/${post.id}`}>
+              <div className={styles.postCard}>
+                <h2 className={styles.postTitle}>{post.title}</h2>
+                <p className={styles.postContent}>{post.content}</p>
+                <p className={styles.postAuthor}>
+                  <strong>By:</strong> {post.author?.username}
+                </p>
 
-              <div className={styles.commentSection}>
-                <h4 className={styles.commentTitle}>Comments</h4>
-                {post.comments && post.comments.length > 0 ? (
-                  post.comments.map((comment) => (
-                    <div key={comment.id} className={styles.commentCard}>
-                      <p>{comment.content}</p>
-                      <small>- {comment.user?.username || 'Anonymous'}</small>
-                    </div>
-                  ))
-                ) : (
-                  <p>No comments yet</p>
-                )}
+                <div className={styles.commentSection}>
+                  <h4 className={styles.commentTitle}>Comments</h4>
+                  {post.comments && post.comments.length > 0 ? (
+                    post.comments.map((comment) => (
+                      <div key={comment.id} className={styles.commentCard}>
+                        <p>{comment.content}</p>
+                        <small>- {comment.user?.username || 'Anonymous'}</small>
+                      </div>
+                    ))
+                  ) : (
+                    <p>No comments yet</p>
+                  )}
+                </div>
+
+                <p className={styles.postMeta}>
+                  Created At: {new Date(post.createdAt).toLocaleDateString()} |{' '}
+                  {post.published ? 'Published' : 'Not Published'}
+                </p>
               </div>
-
-              <p className={styles.postMeta}>
-                Created At: {new Date(post.createdAt).toLocaleDateString()} |{' '}
-                {post.published ? 'Published' : 'Not Published'}
-              </p>
-            </div>
             </Link>
           ))
         )}
       </div>
+
       <div className={styles.footerDiv}>
         <div className={styles.footerContent}>
           <div className={styles.footerAbout}>
