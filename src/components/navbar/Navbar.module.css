@@ -28,8 +28,16 @@
   transition: color 0.3s ease;
 }
 
+.navbar button {
+    background: #ff8c00;
+}
+
 .navbarLogo:hover {
   color: #ffa733;
+}
+.navbar button:hover{
+    background: black;
+    
 }
 
 .navbar nav ul {

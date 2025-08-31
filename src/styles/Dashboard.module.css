@@ -123,10 +123,10 @@
   color: #555;
 }
 
-/* Footer */
+
 .footerDiv {
-  background-color: #111; /* dark background */
-  color: #f1f1f1; /* light text */
+  background-color: #111;
+  color: #f1f1f1; 
   padding: 2rem 4rem;
   display: flex;
   flex-direction: column;
@@ -176,7 +176,7 @@
 }
 
 .footerLinks ul li a:hover {
-  color: #ffd700; /* gold accent on hover */
+  color: #ffd700;
 }
 
 .footerSocial .socialIcons {
