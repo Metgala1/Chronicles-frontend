@@ -227,4 +227,7 @@
     border-bottom: 4px solid rgba(0, 0, 0, 0.2);
     border-radius: 0px;
   }
+  .mainDiv{
+    max-height: 80vh;
+  }
 }
