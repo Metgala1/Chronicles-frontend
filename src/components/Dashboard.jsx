@@ -33,20 +33,6 @@ const Dashboard = () => {
                   <strong>By:</strong> {post.author?.username}
                 </p>
 
-                <div className={styles.commentSection}>
-                  <h4 className={styles.commentTitle}>Comments</h4>
-                  {post.comments && post.comments.length > 0 ? (
-                    post.comments.map((comment) => (
-                      <div key={comment.id} className={styles.commentCard}>
-                        <p>{comment.content}</p>
-                        <small>- {comment.user?.username || 'Anonymous'}</small>
-                      </div>
-                    ))
-                  ) : (
-                    <p>No comments yet</p>
-                  )}
-                </div>
-
                 <p className={styles.postMeta}>
                   Created At: {new Date(post.createdAt).toLocaleDateString()} |{' '}
                   {post.published ? 'Published' : 'Not Published'}
