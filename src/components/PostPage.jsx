@@ -6,6 +6,7 @@ import { FaPaperPlane, FaTrash, FaEdit, FaUser } from "react-icons/fa";
 import { AuthContext } from "../AuthContext/AuthContext";
 import { PostContext } from "../postContext/PostContext";
 import { CommentContext } from "../CommentContext/CommentContext";
+import { Link } from "react-router-dom";
 
 function PostPage() {
   const { id } = useParams();
@@ -65,7 +66,7 @@ function PostPage() {
 
   const handleUpdate = () => navigate("/createpost", { state: { post } });
 
-  if (isPostLoading) return <LoadingDots />;
+  if (isPostLoading) return <div className={styles.loadingDiv}><LoadingDots /></div> ;
   if (error) return <p className={`${styles.status} ${styles.error}`}>{error}</p>;
   if (!post) return <p className={styles.status}>No post found.</p>;
 
@@ -105,8 +106,7 @@ function PostPage() {
             <p className={styles.noComments}>No comments yet.</p>
           )}
         </div>
-
-        <form onSubmit={handleCommentSubmit} className={styles.commentBox}>
+         {user &&  <form onSubmit={handleCommentSubmit} className={styles.commentBox}>
           <textarea
             className={styles.textarea}
             placeholder="Write a comment..."
@@ -117,7 +117,10 @@ function PostPage() {
           <button type="submit" className={styles.button} disabled={isPosting}>
             <FaPaperPlane /> {isPosting ? <LoadingDots /> : "Post Comment"}
           </button>
-        </form>
+        </form>}
+        {!user && <p style={{ textAlign: "center", margin: "auto", fontSize: "larger" }}><Link to={'/login'}>Sign in</Link> to write a comment</p>}
+
+       
       </section>
     </div>
   );
