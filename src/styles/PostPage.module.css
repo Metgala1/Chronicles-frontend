@@ -23,17 +23,6 @@
   color: var(--text-dark);
 }
 
-
-@media (max-width: 768px) {
-  .postPage {
-    padding: 1rem;
-    width: 100%;
-    
-  }
-  .title{
-    text-align: center;
-  }
-}
 .loadingDiv{
     margin-top: 50%;
 }
@@ -217,4 +206,34 @@
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .postPage {
+    padding:  1rem;
+    width: 100%;
+
+  }
+  .title{
+    text-align: center;
+  }
+  .title{
+    font-size: xx-large;
+  }
+  .postCard{
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  .commentsSection{
+    margin-top: 0;
+    border-left: 2px solid rgba(0, 0, 0, 0.1);
+    border-right: 2px solid rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+  }
+  .comments{
+    height: 30vh;
+    scrollbar-color: black;
+  }
+
 }

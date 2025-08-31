@@ -13,7 +13,6 @@ const AuthProvider = ({ children }) => {
 
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
-  // Load auth from localStorage on mount
   useEffect(() => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
