@@ -1,11 +1,10 @@
 import Navbar from './navbar/Navbar';
-import styles from '../styles/Dashboard.module.css';
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import Header from './Header';
-import LoadingDots from './loadings/LoadingDot';
+import { useContext } from 'react';
 import { PostContext } from '../postContext/PostContext';
-import {FaBook, FaUser, FaClock, FaSignInAlt, FaUserPlus, FaEye,  FaFacebook, FaInstagram, FaTwitter, FaLightbulb} from "react-icons/fa"
+import styles from '../styles/Dashboard.module.css';
+import PostList from './PostList';
+import Footer from './Footer';
 
 const Dashboard = () => {
   const { posts, loading, error } = useContext(PostContext);
@@ -17,85 +16,9 @@ const Dashboard = () => {
         <Navbar />
       </div>
 
-      <div id="main" className={styles.mainDiv}>
-        {loading ? (
-          <LoadingDots />
-        ) : error ? (
-          <p className={styles.loadingText}>{error}</p>
-        ) : posts.length === 0 ? (
-          <p className={styles.loadingText}>No posts available</p>
-        ) : (
-          posts.map((post) => (
-            <Link key={post.id} className={styles.link1} to={`/posts/${post.id}`}>
-              <div className={styles.postCard}>
-                <h2 className={styles.postTitle}><FaBook /> {post.title}</h2>
-                <p className={styles.postContent}>{post.content}</p>
-                <p className={styles.postAuthor}>
-                  <strong className={styles.userIcon}><FaUser /></strong> {post.author?.username}
-                </p>
+      <PostList posts={posts} loading={loading} error={error} />
 
-                <p className={styles.postMeta}>  
-                  <span className={styles.clockIcon}><FaClock /></span> Created At: {new Date(post.createdAt).toLocaleDateString()} |{' '}
-                  {post.published ? 'Published' : 'Not Published'}
-                </p>
-              </div>
-            </Link>
-          ))
-        )}
-      </div>
-
-      <div className={styles.footerDiv}>
-        <div className={styles.footerContent}>
-          <div className={styles.footerAbout}>
-            <h4>About Chronicles</h4>
-            <p>
-              Chronicles is a modern blogging platform where authors share
-              insights, stories, and tutorials. Stay connected with us on social
-              media!
-            </p>
-          </div>
-
-          <div className={styles.footerLinks}>
-            <h4>Quick Links</h4>
-            <ul>
-              <Link className={styles.link}>
-                <li key={'home'}>Home</li>
-              </Link>
-              <Link className={styles.link}>
-                <li key={'posts'}><FaEye /> Posts</li>
-              </Link>
-              <Link to={'register'} className={styles.link}>
-                <li key={'register'}><FaUserPlus /> Register</li>
-              </Link>
-              <Link to={'login'} className={styles.link}>
-                <li key={'login'}><FaSignInAlt /> Login</li>
-              </Link>
-            </ul>
-          </div>
-
-          <div className={styles.footerSocial}>
-            <h4>Follow Us</h4>
-            <div className={styles.socialIcons}>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer">
-               <FaFacebook/> Facebook
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noreferrer">
-               <FaTwitter /> Twitter
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noreferrer">
-               <FaInstagram /> Instagram
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.footerBottom}>
-          <p>
-            © {new Date().getFullYear()} Chronicles. All rights reserved. <FaLightbulb /> BY
-            ATAGWE ROGER
-          </p>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 };

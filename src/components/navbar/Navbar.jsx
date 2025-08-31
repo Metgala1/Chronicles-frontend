@@ -14,7 +14,7 @@ const Navbar = () => {
       <nav>
         <ul>
           <li key="home">
-            <Link to="createpost" className={styles.link}><FaPen /> Create Post</Link>
+            <Link to={user ? "createpost" : "login"} className={styles.link}><FaPen /> Create Post</Link>
           </li>
           <li key="posts">
             <a  href="#main" className={styles.link}><FaEye /> View Posts</a>

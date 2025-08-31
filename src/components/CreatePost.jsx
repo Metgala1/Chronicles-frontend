@@ -79,6 +79,7 @@ function CreatePost() {
       <h2 className={styles.heading}>
         {isEditing ? "Update Post" : "Create a New Post"}
       </h2>
+      <hr />
       <form onSubmit={handleSubmit} className={styles.postForm}>
         <div className={styles.formGroup}>
           <label htmlFor="title" className={styles.label}>
