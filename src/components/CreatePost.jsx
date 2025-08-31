@@ -1,19 +1,20 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../styles/CreatePost.module.css";
 import LoadingDots from "./loadings/LoadingDot";
 import { PostContext } from "../postContext/PostContext";
 import { AuthContext } from "../AuthContext/AuthContext";
+import { FaPen } from "react-icons/fa";
 
 function CreatePost() {
-  const location = useLocation();//useLocaton stores the state from my navigate
+  const location = useLocation(); // stores the state from navigate
   const navigate = useNavigate();
   const { auth } = useContext(AuthContext);
   const token = auth?.token;
 
   const { createPost, updatePost } = useContext(PostContext);
 
-  const editingPost = location.state?.post || null; //we get the post from the naviation through the location
+  const editingPost = location.state?.post || null; // get post from navigation
   const isEditing = !!editingPost;
 
   const [title, setTitle] = useState(editingPost?.title || "");
@@ -35,16 +36,13 @@ function CreatePost() {
     }
 
     setIsSubmitting(true);
-
     const postData = { title, content, published };
 
     try {
       let result;
       if (isEditing) {
-        // Update existing post
         result = await updatePost(editingPost.id, postData, token);
       } else {
-        // Create new post
         result = await createPost(postData, token);
       }
 
@@ -63,6 +61,18 @@ function CreatePost() {
       setIsSubmitting(false);
     }
   };
+
+  // Automatically hide the status message after 3 seconds
+  useEffect(() => {
+    if (submissionStatus) {
+      const timer = setTimeout(() => {
+        setSubmissionStatus(null);
+        setErrorMessage("");
+      }, 3000);
+
+      return () => clearTimeout(timer); // cleanup if component unmounts
+    }
+  }, [submissionStatus]);
 
   return (
     <div className={styles.createPostContainer}>
@@ -118,7 +128,12 @@ function CreatePost() {
           className={styles.submitButton}
           disabled={isSubmitting}
         >
-          {isSubmitting ? <LoadingDots /> : isEditing ? "Update Post" : "Create Post"}
+          <FaPen />{" "}
+          {isSubmitting
+            ? <LoadingDots />
+            : isEditing
+            ? "Update Post"
+            : "Create Post"}
         </button>
       </form>
 
