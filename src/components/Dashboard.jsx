@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Header from './Header';
 import LoadingDots from './loadings/LoadingDot';
 import { PostContext } from '../postContext/PostContext';
+import {FaBook, FaUser, FaClock, FaSignInAlt, FaUserPlus, FaEye,  FaFacebook, FaInstagram, FaTwitter, FaLightbulb} from "react-icons/fa"
 
 const Dashboard = () => {
   const { posts, loading, error } = useContext(PostContext);
@@ -27,14 +28,14 @@ const Dashboard = () => {
           posts.map((post) => (
             <Link key={post.id} className={styles.link1} to={`/posts/${post.id}`}>
               <div className={styles.postCard}>
-                <h2 className={styles.postTitle}>{post.title}</h2>
+                <h2 className={styles.postTitle}><FaBook /> {post.title}</h2>
                 <p className={styles.postContent}>{post.content}</p>
                 <p className={styles.postAuthor}>
-                  <strong>By:</strong> {post.author?.username}
+                  <strong className={styles.userIcon}><FaUser /></strong> {post.author?.username}
                 </p>
 
-                <p className={styles.postMeta}>
-                  Created At: {new Date(post.createdAt).toLocaleDateString()} |{' '}
+                <p className={styles.postMeta}>  
+                  <span className={styles.clockIcon}><FaClock /></span> Created At: {new Date(post.createdAt).toLocaleDateString()} |{' '}
                   {post.published ? 'Published' : 'Not Published'}
                 </p>
               </div>
@@ -61,13 +62,13 @@ const Dashboard = () => {
                 <li key={'home'}>Home</li>
               </Link>
               <Link className={styles.link}>
-                <li key={'posts'}>Posts</li>
+                <li key={'posts'}><FaEye /> Posts</li>
               </Link>
               <Link to={'register'} className={styles.link}>
-                <li key={'register'}>Register</li>
+                <li key={'register'}><FaUserPlus /> Register</li>
               </Link>
               <Link to={'login'} className={styles.link}>
-                <li key={'login'}>Login</li>
+                <li key={'login'}><FaSignInAlt /> Login</li>
               </Link>
             </ul>
           </div>
@@ -76,13 +77,13 @@ const Dashboard = () => {
             <h4>Follow Us</h4>
             <div className={styles.socialIcons}>
               <a href="https://facebook.com" target="_blank" rel="noreferrer">
-                Facebook
+               <FaFacebook/> Facebook
               </a>
               <a href="https://twitter.com" target="_blank" rel="noreferrer">
-                Twitter
+               <FaTwitter /> Twitter
               </a>
               <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                Instagram
+               <FaInstagram /> Instagram
               </a>
             </div>
           </div>
@@ -90,7 +91,7 @@ const Dashboard = () => {
 
         <div className={styles.footerBottom}>
           <p>
-            © {new Date().getFullYear()} Chronicles. All rights reserved. BY
+            © {new Date().getFullYear()} Chronicles. All rights reserved. <FaLightbulb /> BY
             ATAGWE ROGER
           </p>
         </div>

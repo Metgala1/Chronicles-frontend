@@ -1,9 +1,9 @@
-
+import {FaFeatherAlt} from "react-icons/fa"
 const Header = () => {
     return (
         <>
       <header class="chronicles-header">
-      <h1 class="chronicles-title">Chronicles</h1>
+      <h1 class="chronicles-title"><FaFeatherAlt />Chronicles</h1>
       <p class="chronicles-subtitle">
         Dive into stories, thoughts, and ideas from around the world
       </p>
