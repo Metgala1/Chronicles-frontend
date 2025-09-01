@@ -20,6 +20,8 @@ function CreatePost() {
   const [title, setTitle] = useState(editingPost?.title || "");
   const [content, setContent] = useState(editingPost?.content || "");
   const [published, setPublished] = useState(editingPost?.published || false);
+  const [image, setImage] = useState(null);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionStatus, setSubmissionStatus] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,14 +38,27 @@ function CreatePost() {
     }
 
     setIsSubmitting(true);
-    const postData = { title, content, published };
+    
+    // --- CHANGE START: Use FormData to send the file to the backend
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    formData.append("published", published);
+    
+    // Only append the image if it exists. The name "image" must match the name in upload.single("image") on the backend.
+    if (image) {
+      formData.append("image", image);
+    }
+    // --- CHANGE END
 
     try {
       let result;
       if (isEditing) {
-        result = await updatePost(editingPost.id, postData, token);
+        // We pass the new formData object instead of the old JSON object.
+        result = await updatePost(editingPost.id, formData, token);
       } else {
-        result = await createPost(postData, token);
+        // We pass the new formData object instead of the old JSON object.
+        result = await createPost(formData, token);
       }
 
       if (result.success) {
@@ -107,6 +122,20 @@ function CreatePost() {
             onChange={(e) => setContent(e.target.value)}
             disabled={isSubmitting}
             required
+          />
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="image" className={styles.label}>
+            Upload Image
+          </label>
+          <input
+            type="file"
+            id="image"
+            className={styles.file}
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            disabled={isSubmitting}
           />
         </div>
 

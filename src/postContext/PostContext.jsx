@@ -55,11 +55,18 @@ export const PostProvider = ({ children }) => {
     }
   }, []);
 
-  const createPost = async ({ title, content, published = false }, token) => {
+const createPost = async (formData, token) => { // Updated parameter name to reflect the use of FormData
     if (!token) return { success: false, message: "User not authenticated." };
 
     try {
-      const { data } = await api.post("/posts", { title, content, published },{ headers: { Authorization: `Bearer ${token}` } });
+      // --- CHANGE START: Send the FormData object. Axios will automatically set the correct headers.
+      const { data } = await api.post("/posts", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          // Don't set Content-Type manually for FormData, as it will be handled automatically
+        },
+      });
+      // --- CHANGE END
       setPosts((prev) => [data, ...prev]);
       return { success: true, post: data };
     } catch (err) {

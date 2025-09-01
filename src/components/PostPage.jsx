@@ -24,7 +24,7 @@ function PostPage() {
   const [error, setError] = useState(null);
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-  // Fetch post and comments
+ 
   const fetchPost = useCallback(async () => {
     try {
       setIsPostLoading(true);
@@ -74,6 +74,11 @@ function PostPage() {
     <div className={styles.postPage}>
       <article className={styles.postCard}>
         <h1 className={styles.title}>{post.title}</h1>
+         <img
+            src={`${BACKEND_URL}${post.imageUrl}`}
+            alt={post.title}
+            className={styles.postImage}
+              />
         <p className={styles.content}>{post.content}</p>
         <p className={styles.author}><FaUser /> <b>Author:</b> {post?.author?.username || "Unknown"}</p>
 

@@ -160,6 +160,10 @@ hr{
   border: 1px solid var(--error-color);
   margin: 1rem auto;
 }
+.file{
+  background-color: black;
+  color: white;
+}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }

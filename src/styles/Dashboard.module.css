@@ -77,6 +77,14 @@
   color: #1a1a1a;
 }
 
+.postImage {
+  width: 100%; /* Take up the full width of the card */
+  height: 200px; /* Or any fixed height you prefer */
+  object-fit: cover; /* This makes sure the image covers the area without distortion */
+  border-radius: 8px 8px 0 0; /* Match the card's rounded corners */
+}
+
+
 .postContent {
   font-size: 1rem;
   margin-bottom: 0.8rem;

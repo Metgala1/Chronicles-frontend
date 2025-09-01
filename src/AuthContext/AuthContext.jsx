@@ -36,33 +36,38 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   // Login function
-  const login = async (email, password) => {
-    try {
-      const { data } = await axios.post(
-        `${BASE_URL}/auth/login`,
-        { email, password },
-        { headers: { 'Content-Type': 'application/json' } }
-      );
+// In AuthContext.js
+const login = async (email, password, navigate) => {
+  try {
+    const { data } = await axios.post(
+      `${BASE_URL}/auth/login`,
+      { email, password },
+      { headers: { 'Content-Type': 'application/json' } }
+    );
 
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
 
-      setAuth({
-        token: data.token,
-        user: data.user,
-        isLoggedIn: true,
-        loading: false,
-      });
+    setAuth({
+      token: data.token,
+      user: data.user,
+      isLoggedIn: true,
+      loading: false,
+    });
 
-      return { success: true };
-    } catch (error) {
-      console.error('Login failed:', error);
-      return {
-        success: false,
-        message: error.response?.data?.message || 'Something went wrong',
-      };
-    }
-  };
+    navigate("/", { replace: true }); // 👈 replace so back button won’t go to login page
+
+    return { success: true };
+  } catch (error) {
+    console.error("Login failed:", error);
+    return {
+      success: false,
+      message: error.response?.data?.message || "Something went wrong",
+    };
+  }
+};
+
+
 
   // Register function
  const register = async ({ email, password, username }) => {

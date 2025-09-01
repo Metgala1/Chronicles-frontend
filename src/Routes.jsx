@@ -5,6 +5,7 @@ import PostPage from './components/PostPage';
 import LoadingDots from './components/loadings/LoadingDot';
 import Error from './components/ErrorComponent/Error';
 import CreatePost from './components/CreatePost';
+import PublicRoute from './components/PublicRoute';
 
 const routes = [
   {
@@ -14,18 +15,26 @@ const routes = [
   },
   {
     path: 'register',
-    element: <Register />,
+    element: (
+      <PublicRoute>
+        <Register />
+      </PublicRoute>
+    ),
     errorElement: <Error />, 
   },
   {
     path: 'login',
-    element: <Login />,
-    errorElement: <Error/>,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
+    errorElement: <Error />,
   },
   {
     path: 'posts/:id',
     element: <PostPage />,
-    errorElement: <Error/>,
+    errorElement: <Error />,
   },
   {
     path: 'loading',
@@ -34,8 +43,8 @@ const routes = [
   },
   {
     path: "createpost",
-    element: <CreatePost />
-
+    element: <CreatePost />,
+    errorElement: <Error />
   }
 ];
 

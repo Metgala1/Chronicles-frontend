@@ -198,11 +198,17 @@
 }
 
 .error {
-  color: #dc3545; /* A standard red for errors */
+  color: #dc3545; 
   font-weight: 600;
 }
 
-/* ====== Animations ====== */
+.postImage {
+  width: 100%; 
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px 8px 0 0; 
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
