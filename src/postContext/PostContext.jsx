@@ -12,8 +12,12 @@ const api = axios.create({
 
 export const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(null);
+  const [offset, setOffset] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const limit = 10; // Number of posts to fetch per batch
 
   const { auth } = useContext(AuthContext);
   const token = auth?.token;
@@ -31,19 +35,42 @@ export const PostProvider = ({ children }) => {
     };
   }, [token]);
 
-  const fetchPosts = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const { data } = await api.get("/posts");
-      setPosts(data);
-    } catch (err) {
-      console.error("Error fetching posts:", err.response?.data || err.message);
-      setError("Failed to load posts.");
-    } finally {
-      setLoading(false);
+const fetchPosts = useCallback(async () => {
+  if (!hasMore || loadingMore) return;
+
+  setLoadingMore(true);
+  setError(null);
+
+  try {
+    const { data } = await api.get(`/posts?limit=${limit}&offset=${offset}`);
+
+    if (data.length === 0) {
+      setHasMore(false);
+    } else {
+      setPosts((prevPosts) => {
+        // prevent duplicates by filtering existing IDs
+        const newPosts = data.filter(
+          (post) => !prevPosts.some((p) => p.id === post.id)
+        );
+        return [...prevPosts, ...newPosts];
+      });
+
+      setOffset((prevOffset) => prevOffset + data.length);
+
+      // if backend returns fewer than limit, no more posts
+      if (data.length < limit) {
+        setHasMore(false);
+      }
     }
-  }, []);
+  } catch (err) {
+    console.error("Error fetching posts:", err.response?.data || err.message);
+    setError("Failed to load posts.");
+  } finally {
+    setLoadingMore(false);
+    setLoading(false);
+  }
+}, [offset, hasMore, loadingMore]);
+
 
   const fetchPostById = useCallback(async (id) => {
     try {
@@ -55,18 +82,15 @@ export const PostProvider = ({ children }) => {
     }
   }, []);
 
-const createPost = async (formData, token) => { // Updated parameter name to reflect the use of FormData
+  const createPost = async (formData, token) => {
     if (!token) return { success: false, message: "User not authenticated." };
 
     try {
-      // --- CHANGE START: Send the FormData object. Axios will automatically set the correct headers.
       const { data } = await api.post("/posts", formData, {
         headers: {
           Authorization: `Bearer ${token}`,
-          // Don't set Content-Type manually for FormData, as it will be handled automatically
         },
       });
-      // --- CHANGE END
       setPosts((prev) => [data, ...prev]);
       return { success: true, post: data };
     } catch (err) {
@@ -116,15 +140,18 @@ const createPost = async (formData, token) => { // Updated parameter name to ref
   };
 
   useEffect(() => {
+    // Initial fetch of the first batch of posts
     fetchPosts();
-  }, [fetchPosts]);
+  }, []);
 
   return (
     <PostContext.Provider
       value={{
         posts,
         loading,
+        loadingMore,
         error,
+        hasMore,
         fetchPosts,
         fetchPostById,
         createPost,

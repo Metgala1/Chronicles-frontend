@@ -7,7 +7,7 @@ import PostList from './PostList';
 import Footer from './Footer';
 
 const Dashboard = () => {
-  const { posts, loading, error } = useContext(PostContext);
+  const { posts, loading, error, fetchPosts, hasMore, loadMore } = useContext(PostContext);
 
   return (
     <div className={styles.dashboard}>
@@ -16,7 +16,7 @@ const Dashboard = () => {
         <Navbar />
       </div>
 
-      <PostList posts={posts} loading={loading} error={error} />
+      <PostList fetchPosts={fetchPosts} hasMore={hasMore} loadMore={loadMore} posts={posts} loading={loading} error={error} />
 
       <Footer />
     </div>
