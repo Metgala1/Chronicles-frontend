@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useCallback } from "react";
 import axios from "axios";
 import { AuthContext } from "../AuthContext/AuthContext";
 
@@ -13,8 +13,8 @@ export const CommentProvider = ({ children }) => {
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
-  // Fetch comments for a post
-  const fetchComments = async (postId) => {
+
+  const fetchComments = useCallback( async (postId) => {
     try {
       setLoading(true);
       const res = await axios.get(`${BACKEND_URL}/comments/post/${postId}`, {
@@ -26,7 +26,7 @@ export const CommentProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  },[BACKEND_URL]);
 
   const createComment = async (postId, content) => {
     if (!token) return { success: false, message: "User not authenticated" };
