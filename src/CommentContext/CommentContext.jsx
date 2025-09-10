@@ -26,7 +26,7 @@ export const CommentProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  },[BACKEND_URL]);
+  },[BACKEND_URL, token]);
 
   const createComment = async (postId, content) => {
     if (!token) return { success: false, message: "User not authenticated" };
